@@ -15,6 +15,8 @@ defmodule StudyManagerWeb.ChannelCase do
 
   use ExUnit.CaseTemplate
 
+  alias Ecto.Adapters.SQL.Sandbox
+
   using do
     quote do
       # Import conveniences for testing with channels
@@ -26,10 +28,10 @@ defmodule StudyManagerWeb.ChannelCase do
   end
 
   setup tags do
-    :ok = Ecto.Adapters.SQL.Sandbox.checkout(StudyManager.Repo)
+    :ok = Sandbox.checkout(StudyManager.Repo)
 
     unless tags[:async] do
-      Ecto.Adapters.SQL.Sandbox.mode(StudyManager.Repo, {:shared, self()})
+      Sandbox.mode(StudyManager.Repo, {:shared, self()})
     end
 
     :ok
