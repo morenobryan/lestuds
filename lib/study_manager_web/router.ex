@@ -18,6 +18,7 @@ defmodule StudyManagerWeb.Router do
 
     get "/", PageController, :index
     resources "/subjects", SubjectController
+    resources "/users", UserController
   end
 
   # Other scopes may use custom stacks.
