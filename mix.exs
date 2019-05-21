@@ -20,7 +20,7 @@ defmodule StudyManager.MixProject do
   def application do
     [
       mod: {StudyManager.Application, []},
-      extra_applications: [:logger, :runtime_tools]
+      extra_applications: [:logger, :runtime_tools, :ueberauth, :ueberauth_identity]
     ]
   end
 
@@ -43,6 +43,8 @@ defmodule StudyManager.MixProject do
       {:gettext, "~> 0.11"},
       {:jason, "~> 1.0"},
       {:plug_cowboy, "~> 2.0"},
+      {:ueberauth, "~> 0.6"},
+      {:ueberauth_identity, "~> 0.2"},
       {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
       {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false}
     ]
