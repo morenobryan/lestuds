@@ -19,6 +19,11 @@ defmodule StudyManagerWeb.Router do
     get "/", PageController, :index
     resources "/subjects", SubjectController
     resources "/users", UserController
+
+    get "/auth/:provider", AuthController, :request
+    get "/auth/:provider/callback", AuthController, :callback
+    post "/auth/:provider/callback", AuthController, :callback
+    post "/auth/logout", AuthController, :delete
   end
 
   # Other scopes may use custom stacks.
