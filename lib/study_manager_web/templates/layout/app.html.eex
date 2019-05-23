@@ -13,9 +13,15 @@
         <nav role="navigation">
           <ul>
             <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
+            <%= if @user_signed_in? do %>
+              <li>Welcome, <%= @current_user.full_name %></li>
+              <li><a href="<%= Routes.auth_path(@conn, :delete, :identity) %>">Logout</a></li>
+            <% else %>
+              <li><a href="<%= Routes.auth_path(@conn, :request, :identity) %>">Login</a></li>
+            <% end %>
           </ul>
         </nav>
-        <a href="http://phoenixframework.org/" class="phx-logo">
+        <a href="<%= Routes.page_path(@conn, :index) %>" class="phx-logo">
           <img src="<%= Routes.static_path(@conn, "/images/phoenix.png") %>" alt="Phoenix Framework Logo"/>
         </a>
       </section>

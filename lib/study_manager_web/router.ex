@@ -7,6 +7,16 @@ defmodule StudyManagerWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+
+    plug(
+      Guardian.Plug.Pipeline,
+      error_handler: StudyManagerWeb.AuthController,
+      module: StudyManagerWeb.Guardian
+    )
+
+    plug Guardian.Plug.VerifySession
+    plug Guardian.Plug.LoadResource, allow_blank: true
+    plug StudyManagerWeb.Plugs.SetCurrentUser
   end
 
   pipeline :api do
@@ -23,7 +33,7 @@ defmodule StudyManagerWeb.Router do
     get "/auth/:provider", AuthController, :request
     get "/auth/:provider/callback", AuthController, :callback
     post "/auth/:provider/callback", AuthController, :callback
-    post "/auth/logout", AuthController, :delete
+    get "/auth/:provider/logout", AuthController, :delete
   end
 
   # Other scopes may use custom stacks.
