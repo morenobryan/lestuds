@@ -22,6 +22,24 @@ defmodule StudyManager.Accounts do
   end
 
   @doc """
+  Gets a single user by an email and a password.
+
+  Raises `Ecto.NoResultsError` if the User does not exist.
+
+  ## Examples
+
+      iex> get_user!(%{email: "bryan@example.com", password: "test123"})
+      %User{}
+
+      iex> get_user!(%{email: "invalid@example.com", password: "invalid"})
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_user!(%{email: email, password: password}) do
+    Repo.get_by!(User, email: email, password: password)
+  end
+
+  @doc """
   Gets a single user.
 
   Raises `Ecto.NoResultsError` if the User does not exist.
@@ -36,6 +54,36 @@ defmodule StudyManager.Accounts do
 
   """
   def get_user!(id), do: Repo.get!(User, id)
+
+  @doc """
+  Gets a single user by an email and a password.
+
+  ## Examples
+
+      iex> get_user!(%{email: "bryan@example.com", password: "test123"})
+      %User{}
+
+      iex> get_user!(%{email: "invalid@example.com", password: "invalid"})
+      nil
+
+  """
+  def get_user(%{email: email, password: password}) do
+    Repo.get_by(User, email: email, password: password)
+  end
+
+  @doc """
+  Gets a single user.
+
+  ## Examples
+
+      iex> get_user(123)
+      %User{}
+
+      iex> get_user(456)
+      nil
+
+  """
+  def get_user(id), do: Repo.get(User, id)
 
   @doc """
   Creates a user.

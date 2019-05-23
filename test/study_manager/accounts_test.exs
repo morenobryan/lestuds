@@ -7,7 +7,11 @@ defmodule StudyManager.AccountsTest do
     alias StudyManager.Accounts.User
 
     @valid_attrs %{email: "some email", full_name: "some full_name", password: "some password"}
-    @update_attrs %{email: "some updated email", full_name: "some updated full_name", password: "some updated password"}
+    @update_attrs %{
+      email: "some updated email",
+      full_name: "some updated full_name",
+      password: "some updated password"
+    }
     @invalid_attrs %{email: nil, full_name: nil, password: nil}
 
     def user_fixture(attrs \\ %{}) do
@@ -27,6 +31,45 @@ defmodule StudyManager.AccountsTest do
     test "get_user!/1 returns the user with given id" do
       user = user_fixture()
       assert Accounts.get_user!(user.id) == user
+    end
+
+    test "get_user!/1 raises an exception with id" do
+      assert_raise Ecto.NoResultsError,
+                   ~r/^expected at least one result but got none in query:/,
+                   fn ->
+                     Accounts.get_user!(1234)
+                   end
+    end
+
+    test "get_user!/1 returns the user with given email/password map" do
+      user = user_fixture()
+      assert Accounts.get_user!(%{email: "some email", password: "some password"}) == user
+    end
+
+    test "get_user!/1 raises an exception with invalid email/password map" do
+      assert_raise Ecto.NoResultsError,
+                   ~r/^expected at least one result but got none in query:/,
+                   fn ->
+                     Accounts.get_user!(%{email: "some email", password: "incorrect password"})
+                   end
+    end
+
+    test "get_user/1 returns the user with given id" do
+      user = user_fixture()
+      assert Accounts.get_user(user.id) == user
+    end
+
+    test "get_user/1 returns nil with invalid id" do
+      refute Accounts.get_user(1234)
+    end
+
+    test "get_user/1 returns the user with given email/password map" do
+      user = user_fixture()
+      assert Accounts.get_user(%{email: "some email", password: "some password"}) == user
+    end
+
+    test "get_user/1 returns nil with invalid email/password map" do
+      refute Accounts.get_user(%{email: "some email", password: "incorrect password"})
     end
 
     test "create_user/1 with valid data creates a user" do
