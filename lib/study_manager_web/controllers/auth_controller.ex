@@ -9,6 +9,7 @@ defmodule StudyManagerWeb.AuthController do
 
   alias StudyManager.Accounts
   alias StudyManager.Accounts.User
+  alias StudyManagerWeb.Guardian.Plug
   alias Ueberauth.Strategy.Helpers
 
   def request(conn, _params) do
@@ -30,8 +31,7 @@ defmodule StudyManagerWeb.AuthController do
       %User{} ->
         conn
         |> put_flash(:info, "Successfully authenticated.")
-        |> put_session(:current_user, user)
-        |> configure_session(renew: true)
+        |> Plug.sign_in(user)
         |> redirect(to: "/")
 
       nil ->
@@ -43,8 +43,14 @@ defmodule StudyManagerWeb.AuthController do
 
   def delete(conn, _params) do
     conn
-    |> put_flash(:info, "You have been logged out!")
-    |> configure_session(drop: true)
+    |> put_flash(:info, "You have been logged out")
+    |> Plug.sign_out()
     |> redirect(to: "/")
+  end
+
+  def auth_error(conn, {_type, _reason}, _opts) do
+    conn
+    |> put_flash(:info, "You need to login to access this page")
+    |> redirect(to: Routes.auth_path(conn, :request, :identity))
   end
 end
