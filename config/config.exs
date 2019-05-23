@@ -34,6 +34,10 @@ config :ueberauth, Ueberauth,
     }
   ]
 
+config :study_manager, StudyManagerWeb.Guardian,
+  issuer: "study_manager",
+  secret_key: "g14aHddl8RwizUzPOKF588zxP9Jd3Wb40+L0p6cx2oWrRI9NuXoyyM2thcxUT07Y"
+
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
