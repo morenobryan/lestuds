@@ -4,6 +4,8 @@ defmodule StudyManagerWeb.SubjectController do
   alias StudyManager.StudyPlans
   alias StudyManager.StudyPlans.Subject
 
+  plug Guardian.Plug.EnsureAuthenticated
+
   def index(conn, _params) do
     subjects = StudyPlans.list_subjects()
     render(conn, "index.html", subjects: subjects)

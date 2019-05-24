@@ -17,6 +17,9 @@ defmodule StudyManagerWeb.ConnCase do
 
   alias Ecto.Adapters.SQL.Sandbox
   alias Phoenix.ConnTest
+  alias StudyManager.Accounts
+  alias StudyManager.Accounts.User
+  alias StudyManagerWeb.Guardian.Plug, as: Guardian
 
   using do
     quote do
@@ -26,6 +29,48 @@ defmodule StudyManagerWeb.ConnCase do
 
       # The default endpoint for testing
       @endpoint StudyManagerWeb.Endpoint
+
+      def create_and_login_user(context) do
+        user = create_user()
+        conn = signin_user(user)
+        {:ok, conn: conn, user: user}
+      end
+
+      def login_user(context) do
+        conn = signin_user(context.user)
+
+        {:ok, conn: conn, user: context.user}
+      end
+
+      def signin_user(%User{} = user) do
+        build_conn()
+        |> get("/")
+        |> Map.update!(:state, fn _ -> :set end)
+        |> Guardian.sign_in(user)
+        |> send_resp(200, "Flush the session")
+      end
+
+      def logout_user(_) do
+        conn =
+          build_conn()
+          |> get("/")
+          |> Map.update!(:state, fn _ -> :set end)
+          |> Guardian.sign_out()
+          |> send_resp(200, "Flush the session")
+
+        {:ok, conn: conn, user: nil}
+      end
+
+      defp create_user do
+        {:ok, user} =
+          Accounts.create_user(%{
+            email: "some email",
+            full_name: "some full_name",
+            password: "some password"
+          })
+
+        user
+      end
     end
   end
 

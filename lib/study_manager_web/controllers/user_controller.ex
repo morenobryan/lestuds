@@ -4,6 +4,8 @@ defmodule StudyManagerWeb.UserController do
   alias StudyManager.Accounts
   alias StudyManager.Accounts.User
 
+  plug Guardian.Plug.EnsureAuthenticated
+
   def index(conn, _params) do
     users = Accounts.list_users()
     render(conn, "index.html", users: users)

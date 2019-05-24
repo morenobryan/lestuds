@@ -4,7 +4,11 @@ defmodule StudyManagerWeb.UserControllerTest do
   alias StudyManager.Accounts
 
   @create_attrs %{email: "some email", full_name: "some full_name", password: "some password"}
-  @update_attrs %{email: "some updated email", full_name: "some updated full_name", password: "some updated password"}
+  @update_attrs %{
+    email: "some updated email",
+    full_name: "some updated full_name",
+    password: "some updated password"
+  }
   @invalid_attrs %{email: nil, full_name: nil, password: nil}
 
   def fixture(:user) do
@@ -13,6 +17,8 @@ defmodule StudyManagerWeb.UserControllerTest do
   end
 
   describe "index" do
+    setup [:create_and_login_user]
+
     test "lists all users", %{conn: conn} do
       conn = get(conn, Routes.user_path(conn, :index))
       assert html_response(conn, 200) =~ "Listing Users"
@@ -20,6 +26,8 @@ defmodule StudyManagerWeb.UserControllerTest do
   end
 
   describe "new user" do
+    setup [:create_and_login_user]
+
     test "renders form", %{conn: conn} do
       conn = get(conn, Routes.user_path(conn, :new))
       assert html_response(conn, 200) =~ "New User"
@@ -27,6 +35,8 @@ defmodule StudyManagerWeb.UserControllerTest do
   end
 
   describe "create user" do
+    setup [:create_and_login_user]
+
     test "redirects to show when data is valid", %{conn: conn} do
       conn = post(conn, Routes.user_path(conn, :create), user: @create_attrs)
 
@@ -44,7 +54,7 @@ defmodule StudyManagerWeb.UserControllerTest do
   end
 
   describe "edit user" do
-    setup [:create_user]
+    setup [:create_user, :login_user]
 
     test "renders form for editing chosen user", %{conn: conn, user: user} do
       conn = get(conn, Routes.user_path(conn, :edit, user))
@@ -53,7 +63,7 @@ defmodule StudyManagerWeb.UserControllerTest do
   end
 
   describe "update user" do
-    setup [:create_user]
+    setup [:create_user, :login_user]
 
     test "redirects when data is valid", %{conn: conn, user: user} do
       conn = put(conn, Routes.user_path(conn, :update, user), user: @update_attrs)
@@ -70,11 +80,12 @@ defmodule StudyManagerWeb.UserControllerTest do
   end
 
   describe "delete user" do
-    setup [:create_user]
+    setup [:create_user, :login_user]
 
     test "deletes chosen user", %{conn: conn, user: user} do
       conn = delete(conn, Routes.user_path(conn, :delete, user))
       assert redirected_to(conn) == Routes.user_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.user_path(conn, :show, user))
       end
