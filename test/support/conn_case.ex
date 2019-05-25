@@ -45,6 +45,8 @@ defmodule StudyManagerWeb.ConnCase do
       def signin_user(%User{} = user) do
         build_conn()
         |> get("/")
+        # I don't know exactly why we need to set the state on the next line,
+        # but somehow it's the only way of making the sign in process work
         |> Map.update!(:state, fn _ -> :set end)
         |> Guardian.sign_in(user)
         |> send_resp(200, "Flush the session")
@@ -54,6 +56,8 @@ defmodule StudyManagerWeb.ConnCase do
         conn =
           build_conn()
           |> get("/")
+          # I don't know exactly why we need to set the state on the next line,
+          # but somehow it's the only way of making the sign in process work
           |> Map.update!(:state, fn _ -> :set end)
           |> Guardian.sign_out()
           |> send_resp(200, "Flush the session")
