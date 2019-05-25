@@ -47,6 +47,7 @@ defmodule StudyManager.MixProject do
       {:ueberauth_identity, "~> 0.2"},
       {:guardian, "~> 1.0"},
       {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
+      {:inch_ex, "~> 2.0", only: [:dev, :test]},
       {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false}
     ]
   end
