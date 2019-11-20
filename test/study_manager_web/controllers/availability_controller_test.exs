@@ -56,7 +56,11 @@ defmodule StudyManagerWeb.AvailabilityControllerTest do
     setup [:create_availability]
 
     test "redirects when data is valid", %{conn: conn, availability: availability} do
-      conn = put(conn, Routes.availability_path(conn, :update, availability), availability: @update_attrs)
+      conn =
+        put(conn, Routes.availability_path(conn, :update, availability),
+          availability: @update_attrs
+        )
+
       assert redirected_to(conn) == Routes.availability_path(conn, :show, availability)
 
       conn = get(conn, Routes.availability_path(conn, :show, availability))
@@ -64,7 +68,11 @@ defmodule StudyManagerWeb.AvailabilityControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, availability: availability} do
-      conn = put(conn, Routes.availability_path(conn, :update, availability), availability: @invalid_attrs)
+      conn =
+        put(conn, Routes.availability_path(conn, :update, availability),
+          availability: @invalid_attrs
+        )
+
       assert html_response(conn, 200) =~ "Edit Availability"
     end
   end
@@ -75,6 +83,7 @@ defmodule StudyManagerWeb.AvailabilityControllerTest do
     test "deletes chosen availability", %{conn: conn, availability: availability} do
       conn = delete(conn, Routes.availability_path(conn, :delete, availability))
       assert redirected_to(conn) == Routes.availability_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.availability_path(conn, :show, availability))
       end

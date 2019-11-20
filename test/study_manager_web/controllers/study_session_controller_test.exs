@@ -46,7 +46,10 @@ defmodule StudyManagerWeb.StudySessionControllerTest do
   describe "edit study_session" do
     setup [:create_study_session]
 
-    test "renders form for editing chosen study_session", %{conn: conn, study_session: study_session} do
+    test "renders form for editing chosen study_session", %{
+      conn: conn,
+      study_session: study_session
+    } do
       conn = get(conn, Routes.study_session_path(conn, :edit, study_session))
       assert html_response(conn, 200) =~ "Edit Study session"
     end
@@ -56,7 +59,11 @@ defmodule StudyManagerWeb.StudySessionControllerTest do
     setup [:create_study_session]
 
     test "redirects when data is valid", %{conn: conn, study_session: study_session} do
-      conn = put(conn, Routes.study_session_path(conn, :update, study_session), study_session: @update_attrs)
+      conn =
+        put(conn, Routes.study_session_path(conn, :update, study_session),
+          study_session: @update_attrs
+        )
+
       assert redirected_to(conn) == Routes.study_session_path(conn, :show, study_session)
 
       conn = get(conn, Routes.study_session_path(conn, :show, study_session))
@@ -64,7 +71,11 @@ defmodule StudyManagerWeb.StudySessionControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn, study_session: study_session} do
-      conn = put(conn, Routes.study_session_path(conn, :update, study_session), study_session: @invalid_attrs)
+      conn =
+        put(conn, Routes.study_session_path(conn, :update, study_session),
+          study_session: @invalid_attrs
+        )
+
       assert html_response(conn, 200) =~ "Edit Study session"
     end
   end
@@ -75,6 +86,7 @@ defmodule StudyManagerWeb.StudySessionControllerTest do
     test "deletes chosen study_session", %{conn: conn, study_session: study_session} do
       conn = delete(conn, Routes.study_session_path(conn, :delete, study_session))
       assert redirected_to(conn) == Routes.study_session_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.study_session_path(conn, :show, study_session))
       end

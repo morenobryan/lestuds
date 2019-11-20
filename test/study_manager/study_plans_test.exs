@@ -7,7 +7,11 @@ defmodule StudyManager.StudyPlansTest do
     alias StudyManager.StudyPlans.Subject
 
     @valid_attrs %{color: "some color", description: "some description", name: "some name"}
-    @update_attrs %{color: "some updated color", description: "some updated description", name: "some updated name"}
+    @update_attrs %{
+      color: "some updated color",
+      description: "some updated description",
+      name: "some updated name"
+    }
     @invalid_attrs %{color: nil, description: nil, name: nil}
 
     def subject_fixture(attrs \\ %{}) do
@@ -70,7 +74,11 @@ defmodule StudyManager.StudyPlansTest do
     alias StudyManager.StudyPlans.Plan
 
     @valid_attrs %{end_date: ~D[2010-04-17], name: "some name", start_date: ~D[2010-04-17]}
-    @update_attrs %{end_date: ~D[2011-05-18], name: "some updated name", start_date: ~D[2011-05-18]}
+    @update_attrs %{
+      end_date: ~D[2011-05-18],
+      name: "some updated name",
+      start_date: ~D[2011-05-18]
+    }
     @invalid_attrs %{end_date: nil, name: nil, start_date: nil}
 
     def plan_fixture(attrs \\ %{}) do

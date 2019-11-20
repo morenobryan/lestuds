@@ -75,6 +75,7 @@ defmodule StudyManagerWeb.PlanControllerTest do
     test "deletes chosen plan", %{conn: conn, plan: plan} do
       conn = delete(conn, Routes.plan_path(conn, :delete, plan))
       assert redirected_to(conn) == Routes.plan_path(conn, :index)
+
       assert_error_sent 404, fn ->
         get(conn, Routes.plan_path(conn, :show, plan))
       end

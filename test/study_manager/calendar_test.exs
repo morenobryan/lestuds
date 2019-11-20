@@ -42,7 +42,10 @@ defmodule StudyManager.CalendarTest do
 
     test "update_availability/2 with valid data updates the availability" do
       availability = availability_fixture()
-      assert {:ok, %Availability{} = availability} = Calendar.update_availability(availability, @update_attrs)
+
+      assert {:ok, %Availability{} = availability} =
+               Calendar.update_availability(availability, @update_attrs)
+
       assert availability.end_time == ~T[15:01:01]
       assert availability.start_time == ~T[15:01:01]
       assert availability.weekday == 43
@@ -50,7 +53,10 @@ defmodule StudyManager.CalendarTest do
 
     test "update_availability/2 with invalid data returns error changeset" do
       availability = availability_fixture()
-      assert {:error, %Ecto.Changeset{}} = Calendar.update_availability(availability, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Calendar.update_availability(availability, @invalid_attrs)
+
       assert availability == Calendar.get_availability!(availability.id)
     end
 
@@ -104,14 +110,20 @@ defmodule StudyManager.CalendarTest do
 
     test "update_study_session/2 with valid data updates the study_session" do
       study_session = study_session_fixture()
-      assert {:ok, %StudySession{} = study_session} = Calendar.update_study_session(study_session, @update_attrs)
+
+      assert {:ok, %StudySession{} = study_session} =
+               Calendar.update_study_session(study_session, @update_attrs)
+
       assert study_session.end_time == ~T[15:01:01]
       assert study_session.start_time == ~T[15:01:01]
     end
 
     test "update_study_session/2 with invalid data returns error changeset" do
       study_session = study_session_fixture()
-      assert {:error, %Ecto.Changeset{}} = Calendar.update_study_session(study_session, @invalid_attrs)
+
+      assert {:error, %Ecto.Changeset{}} =
+               Calendar.update_study_session(study_session, @invalid_attrs)
+
       assert study_session == Calendar.get_study_session!(study_session.id)
     end
 
