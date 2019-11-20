@@ -8,6 +8,8 @@ defmodule StudyManager.StudyPlans.Plan do
     field :start_date, :date
     field :user_id, :id
 
+    many_to_many(:subject, Subject, join_through: "subjects_plans")
+
     timestamps()
   end
 
