@@ -101,4 +101,100 @@ defmodule StudyManager.Calendar do
   def change_availability(%Availability{} = availability) do
     Availability.changeset(availability, %{})
   end
+
+  alias StudyManager.Calendar.StudySession
+
+  @doc """
+  Returns the list of study_session.
+
+  ## Examples
+
+      iex> list_study_session()
+      [%StudySession{}, ...]
+
+  """
+  def list_study_session do
+    Repo.all(StudySession)
+  end
+
+  @doc """
+  Gets a single study_session.
+
+  Raises `Ecto.NoResultsError` if the Study session does not exist.
+
+  ## Examples
+
+      iex> get_study_session!(123)
+      %StudySession{}
+
+      iex> get_study_session!(456)
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_study_session!(id), do: Repo.get!(StudySession, id)
+
+  @doc """
+  Creates a study_session.
+
+  ## Examples
+
+      iex> create_study_session(%{field: value})
+      {:ok, %StudySession{}}
+
+      iex> create_study_session(%{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def create_study_session(attrs \\ %{}) do
+    %StudySession{}
+    |> StudySession.changeset(attrs)
+    |> Repo.insert()
+  end
+
+  @doc """
+  Updates a study_session.
+
+  ## Examples
+
+      iex> update_study_session(study_session, %{field: new_value})
+      {:ok, %StudySession{}}
+
+      iex> update_study_session(study_session, %{field: bad_value})
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def update_study_session(%StudySession{} = study_session, attrs) do
+    study_session
+    |> StudySession.changeset(attrs)
+    |> Repo.update()
+  end
+
+  @doc """
+  Deletes a StudySession.
+
+  ## Examples
+
+      iex> delete_study_session(study_session)
+      {:ok, %StudySession{}}
+
+      iex> delete_study_session(study_session)
+      {:error, %Ecto.Changeset{}}
+
+  """
+  def delete_study_session(%StudySession{} = study_session) do
+    Repo.delete(study_session)
+  end
+
+  @doc """
+  Returns an `%Ecto.Changeset{}` for tracking study_session changes.
+
+  ## Examples
+
+      iex> change_study_session(study_session)
+      %Ecto.Changeset{source: %StudySession{}}
+
+  """
+  def change_study_session(%StudySession{} = study_session) do
+    StudySession.changeset(study_session, %{})
+  end
 end

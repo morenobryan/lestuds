@@ -1,0 +1,28 @@
+<h1>Listing Study session</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Start time</th>
+      <th>End time</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for study_session <- @study_session do %>
+    <tr>
+      <td><%= study_session.start_time %></td>
+      <td><%= study_session.end_time %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.study_session_path(@conn, :show, study_session) %></span>
+        <span><%= link "Edit", to: Routes.study_session_path(@conn, :edit, study_session) %></span>
+        <span><%= link "Delete", to: Routes.study_session_path(@conn, :delete, study_session), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Study session", to: Routes.study_session_path(@conn, :new) %></span>

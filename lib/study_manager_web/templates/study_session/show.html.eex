@@ -1,0 +1,18 @@
+<h1>Show Study session</h1>
+
+<ul>
+
+  <li>
+    <strong>Start time:</strong>
+    <%= @study_session.start_time %>
+  </li>
+
+  <li>
+    <strong>End time:</strong>
+    <%= @study_session.end_time %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.study_session_path(@conn, :edit, @study_session) %></span>
+<span><%= link "Back", to: Routes.study_session_path(@conn, :index) %></span>
