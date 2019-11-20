@@ -1,0 +1,30 @@
+<h1>Listing Plans</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Start date</th>
+      <th>End date</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for plan <- @plans do %>
+    <tr>
+      <td><%= plan.name %></td>
+      <td><%= plan.start_date %></td>
+      <td><%= plan.end_date %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.plan_path(@conn, :show, plan) %></span>
+        <span><%= link "Edit", to: Routes.plan_path(@conn, :edit, plan) %></span>
+        <span><%= link "Delete", to: Routes.plan_path(@conn, :delete, plan), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Plan", to: Routes.plan_path(@conn, :new) %></span>
