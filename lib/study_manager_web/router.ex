@@ -29,6 +29,9 @@ defmodule StudyManagerWeb.Router do
     get "/", PageController, :index
     resources "/subjects", SubjectController
     resources "/users", UserController
+    resources "/availability", AvailabilityController
+    resources "/plan", PlanController
+    resources "/sessions", StudySessionController
 
     get "/auth/:provider", AuthController, :request
     get "/auth/:provider/callback", AuthController, :callback

@@ -7,6 +7,8 @@ defmodule StudyManager.StudyPlans.Subject do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias StudyManager.StudyPlans.Plan
+
   schema "subjects" do
     field :color, :string
     field :description, :string

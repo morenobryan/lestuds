@@ -2,6 +2,8 @@ defmodule StudyManager.StudyPlans.Plan do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias StudyManager.StudyPlans.Subject
+
   schema "plans" do
     field :end_date, :date
     field :name, :string
