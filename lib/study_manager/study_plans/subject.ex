@@ -11,6 +11,7 @@ defmodule StudyManager.StudyPlans.Subject do
     field :color, :string
     field :description, :string
     field :name, :string
+    field :user_id, :id
 
     timestamps()
   end
@@ -18,7 +19,7 @@ defmodule StudyManager.StudyPlans.Subject do
   @doc false
   def changeset(subject, attrs) do
     subject
-    |> cast(attrs, [:name, :description, :color])
-    |> validate_required([:name, :description, :color])
+    |> cast(attrs, [:name, :description, :color, :user_id])
+    |> validate_required([:name, :description, :color, :user_id])
   end
 end

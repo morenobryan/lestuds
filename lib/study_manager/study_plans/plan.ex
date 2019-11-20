@@ -6,6 +6,7 @@ defmodule StudyManager.StudyPlans.Plan do
     field :end_date, :date
     field :name, :string
     field :start_date, :date
+    field :user_id, :id
 
     timestamps()
   end
@@ -13,7 +14,7 @@ defmodule StudyManager.StudyPlans.Plan do
   @doc false
   def changeset(plan, attrs) do
     plan
-    |> cast(attrs, [:name, :start_date, :end_date])
-    |> validate_required([:name, :start_date, :end_date])
+    |> cast(attrs, [:name, :start_date, :end_date, :user_id])
+    |> validate_required([:name, :start_date, :end_date, :user_id])
   end
 end
