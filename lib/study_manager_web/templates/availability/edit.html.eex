@@ -1,0 +1,5 @@
+<h1>Edit Availability</h1>
+
+<%= render "form.html", Map.put(assigns, :action, Routes.availability_path(@conn, :update, @availability)) %>
+
+<span><%= link "Back", to: Routes.availability_path(@conn, :index) %></span>

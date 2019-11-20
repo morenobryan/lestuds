@@ -1,0 +1,30 @@
+<h1>Listing Availability</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Weekday</th>
+      <th>Start time</th>
+      <th>End time</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for availability <- @availability do %>
+    <tr>
+      <td><%= availability.weekday %></td>
+      <td><%= availability.start_time %></td>
+      <td><%= availability.end_time %></td>
+
+      <td>
+        <span><%= link "Show", to: Routes.availability_path(@conn, :show, availability) %></span>
+        <span><%= link "Edit", to: Routes.availability_path(@conn, :edit, availability) %></span>
+        <span><%= link "Delete", to: Routes.availability_path(@conn, :delete, availability), method: :delete, data: [confirm: "Are you sure?"] %></span>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<span><%= link "New Availability", to: Routes.availability_path(@conn, :new) %></span>

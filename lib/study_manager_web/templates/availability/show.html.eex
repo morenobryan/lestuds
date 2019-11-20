@@ -1,0 +1,23 @@
+<h1>Show Availability</h1>
+
+<ul>
+
+  <li>
+    <strong>Weekday:</strong>
+    <%= @availability.weekday %>
+  </li>
+
+  <li>
+    <strong>Start time:</strong>
+    <%= @availability.start_time %>
+  </li>
+
+  <li>
+    <strong>End time:</strong>
+    <%= @availability.end_time %>
+  </li>
+
+</ul>
+
+<span><%= link "Edit", to: Routes.availability_path(@conn, :edit, @availability) %></span>
+<span><%= link "Back", to: Routes.availability_path(@conn, :index) %></span>
