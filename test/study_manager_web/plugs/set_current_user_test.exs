@@ -3,8 +3,8 @@ defmodule StudyManagerWeb.Plugs.SetCurrentUserTest do
   use Plug.Test
 
   alias StudyManager.Accounts.User
-  alias StudyManagerWeb.Plugs.SetCurrentUser
   alias StudyManagerWeb.Guardian.Plug
+  alias StudyManagerWeb.Plugs.SetCurrentUser
 
   test "assigns nil for the current user when no user is logged in" do
     conn =
