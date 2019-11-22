@@ -4,6 +4,8 @@ defmodule StudyManager.StudyPlans do
   """
 
   import Ecto.Query, warn: false
+  alias Ecto.Changeset
+
   alias StudyManager.Repo
 
   alias StudyManager.StudyPlans.Subject
@@ -134,38 +136,48 @@ defmodule StudyManager.StudyPlans do
   def get_plan!(id), do: Repo.get!(Plan, id)
 
   @doc """
-  Creates a plan.
+  Creates a plan. It can include or not an association with a list of subjects.
 
   ## Examples
 
       iex> create_plan(%{field: value})
       {:ok, %Plan{}}
 
+      iex> create_plan(%{field: value}, [%Subject{}])
+      {:ok, %Plan{}}
+
       iex> create_plan(%{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_plan(attrs \\ %{}) do
+  def create_plan(attrs \\ %{}, subjects \\ %{}) do
     %Plan{}
     |> Plan.changeset(attrs)
+    |> Changeset.put_assoc(:subjects, subjects)
     |> Repo.insert()
   end
 
   @doc """
-  Updates a plan.
+  Updates a plan. It can include or not an association with a list of subjects.
 
   ## Examples
 
       iex> update_plan(plan, %{field: new_value})
       {:ok, %Plan{}}
 
+      iex> update_plan(plan, %{field: new_value}, [%Subject{}])
+      {:ok, %Plan{}}
+
       iex> update_plan(plan, %{field: bad_value})
       {:error, %Ecto.Changeset{}}
 
   """
-  def update_plan(%Plan{} = plan, attrs) do
+  def update_plan(%Plan{} = plan, attrs, subjects \\ %{}) do
+    plan = Repo.preload(plan, :subjects)
+
     plan
     |> Plan.changeset(attrs)
+    |> Changeset.put_assoc(:subjects, [subjects | plan.subjects])
     |> Repo.update()
   end
 

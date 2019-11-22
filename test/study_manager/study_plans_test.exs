@@ -79,6 +79,11 @@ defmodule StudyManager.StudyPlansTest do
       name: "some updated name",
       start_date: ~D[2011-05-18]
     }
+    @subject_association_attrs %{
+      color: "some updated color",
+      description: "some updated description",
+      name: "some updated name"
+    }
     @invalid_attrs %{end_date: nil, name: nil, start_date: nil}
 
     def plan_fixture(attrs \\ %{}) do
@@ -102,6 +107,15 @@ defmodule StudyManager.StudyPlansTest do
 
     test "create_plan/1 with valid data creates a plan" do
       assert {:ok, %Plan{} = plan} = StudyPlans.create_plan(@valid_attrs)
+      assert plan.end_date == ~D[2010-04-17]
+      assert plan.name == "some name"
+      assert plan.start_date == ~D[2010-04-17]
+    end
+
+    test "create_plan/2 with valid data creates a plan and a subject associated to it" do
+      assert {:ok, %Plan{} = plan} =
+               StudyPlans.create_plan(@valid_attrs, @subject_association_attrs)
+
       assert plan.end_date == ~D[2010-04-17]
       assert plan.name == "some name"
       assert plan.start_date == ~D[2010-04-17]
