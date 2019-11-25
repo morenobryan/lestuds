@@ -1,12 +1,13 @@
 defmodule StudyManager.StudyPlansTest do
   use StudyManager.DataCase
 
+  import StudyManager.Factory
+
   alias StudyManager.StudyPlans
 
   describe "subjects" do
     alias StudyManager.StudyPlans.Subject
 
-    @valid_attrs %{color: "some color", description: "some description", name: "some name"}
     @update_attrs %{
       color: "some updated color",
       description: "some updated description",
@@ -17,7 +18,7 @@ defmodule StudyManager.StudyPlansTest do
     def subject_fixture(attrs \\ %{}) do
       {:ok, subject} =
         attrs
-        |> Enum.into(@valid_attrs)
+        |> Enum.into(string_params_with_assocs(:subject))
         |> StudyPlans.create_subject()
 
       subject
@@ -34,10 +35,12 @@ defmodule StudyManager.StudyPlansTest do
     end
 
     test "create_subject/1 with valid data creates a subject" do
-      assert {:ok, %Subject{} = subject} = StudyPlans.create_subject(@valid_attrs)
-      assert subject.color == "some color"
+      assert {:ok, %Subject{} = subject} =
+               StudyPlans.create_subject(string_params_with_assocs(:subject))
+
+      assert subject.color == "#FF00FF"
       assert subject.description == "some description"
-      assert subject.name == "some name"
+      assert subject.name == "Bryan Bryerson"
     end
 
     test "create_subject/1 with invalid data returns error changeset" do
@@ -73,7 +76,6 @@ defmodule StudyManager.StudyPlansTest do
   describe "plans" do
     alias StudyManager.StudyPlans.Plan
 
-    @valid_attrs %{end_date: ~D[2010-04-17], name: "some name", start_date: ~D[2010-04-17]}
     @update_attrs %{
       end_date: ~D[2011-05-18],
       name: "some updated name",
@@ -89,7 +91,7 @@ defmodule StudyManager.StudyPlansTest do
     def plan_fixture(attrs \\ %{}) do
       {:ok, plan} =
         attrs
-        |> Enum.into(@valid_attrs)
+        |> Enum.into(string_params_with_assocs(:plan))
         |> StudyPlans.create_plan()
 
       plan
@@ -106,18 +108,21 @@ defmodule StudyManager.StudyPlansTest do
     end
 
     test "create_plan/1 with valid data creates a plan" do
-      assert {:ok, %Plan{} = plan} = StudyPlans.create_plan(@valid_attrs)
+      assert {:ok, %Plan{} = plan} = StudyPlans.create_plan(string_params_with_assocs(:plan))
       assert plan.end_date == ~D[2010-04-17]
-      assert plan.name == "some name"
+      assert plan.name == "Bryan Bryerson"
       assert plan.start_date == ~D[2010-04-17]
     end
 
     test "create_plan/2 with valid data creates a plan and a subject associated to it" do
       assert {:ok, %Plan{} = plan} =
-               StudyPlans.create_plan(@valid_attrs, @subject_association_attrs)
+               StudyPlans.create_plan(
+                 string_params_with_assocs(:plan),
+                 [@subject_association_attrs]
+               )
 
       assert plan.end_date == ~D[2010-04-17]
-      assert plan.name == "some name"
+      assert plan.name == "Bryan Bryerson"
       assert plan.start_date == ~D[2010-04-17]
     end
 

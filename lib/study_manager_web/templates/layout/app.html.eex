@@ -17,6 +17,7 @@
               <li>Welcome, <%= @current_user.full_name %></li>
               <li><a href="<%= Routes.auth_path(@conn, :delete, :identity) %>">Logout</a></li>
             <% else %>
+              <li><a href="<%= Routes.auth_path(@conn, :request, :identity) %>">Register</a></li>
               <li><a href="<%= Routes.auth_path(@conn, :request, :identity) %>">Login</a></li>
             <% end %>
           </ul>

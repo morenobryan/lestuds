@@ -116,7 +116,7 @@ defmodule StudyManager.StudyPlans do
 
   """
   def list_plans do
-    Repo.all(Plan)
+    Repo.all(Plan) |> Repo.preload(:subjects)
   end
 
   @doc """
@@ -133,7 +133,7 @@ defmodule StudyManager.StudyPlans do
       ** (Ecto.NoResultsError)
 
   """
-  def get_plan!(id), do: Repo.get!(Plan, id)
+  def get_plan!(id), do: Repo.get!(Plan, id) |> Repo.preload(:subjects)
 
   @doc """
   Creates a plan. It can include or not an association with a list of subjects.
@@ -150,7 +150,7 @@ defmodule StudyManager.StudyPlans do
       {:error, %Ecto.Changeset{}}
 
   """
-  def create_plan(attrs \\ %{}, subjects \\ %{}) do
+  def create_plan(attrs \\ %{}, subjects \\ []) do
     %Plan{}
     |> Plan.changeset(attrs)
     |> Changeset.put_assoc(:subjects, subjects)

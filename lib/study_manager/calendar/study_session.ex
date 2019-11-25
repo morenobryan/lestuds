@@ -2,11 +2,14 @@ defmodule StudyManager.Calendar.StudySession do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias StudyManager.StudyPlans.{Subject, Plan}
+
   schema "study_session" do
     field :end_time, :time
     field :start_time, :time
-    field :subject_id, :id
-    field :plan_id, :id
+
+    belongs_to(:subject, Subject)
+    belongs_to(:plan, Plan)
 
     timestamps()
   end

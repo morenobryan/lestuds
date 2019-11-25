@@ -53,7 +53,8 @@ defmodule StudyManager.MixProject do
       {:credo, "~> 1.0.0", only: [:dev, :test], runtime: false},
       {:inch_ex, "~> 2.0", only: [:dev, :test]},
       {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false},
-      {:sobelow, "~> 0.7", only: [:dev, :test], runtime: false}
+      {:sobelow, "~> 0.7", only: [:dev, :test], runtime: false},
+      {:ex_machina, "~> 2.3", only: :test}
     ]
   end
 

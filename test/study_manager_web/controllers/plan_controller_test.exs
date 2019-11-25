@@ -1,15 +1,13 @@
 defmodule StudyManagerWeb.PlanControllerTest do
   use StudyManagerWeb.ConnCase
 
-  alias StudyManager.StudyPlans
+  import StudyManager.Factory
 
-  @create_attrs %{end_date: ~D[2010-04-17], name: "some name", start_date: ~D[2010-04-17]}
   @update_attrs %{end_date: ~D[2011-05-18], name: "some updated name", start_date: ~D[2011-05-18]}
   @invalid_attrs %{end_date: nil, name: nil, start_date: nil}
 
   def fixture(:plan) do
-    {:ok, plan} = StudyPlans.create_plan(@create_attrs)
-    plan
+    insert(:plan)
   end
 
   describe "index" do
@@ -28,7 +26,11 @@ defmodule StudyManagerWeb.PlanControllerTest do
 
   describe "create plan" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.plan_path(conn, :create), plan: @create_attrs)
+      conn =
+        post(conn, Routes.plan_path(conn, :create),
+          plan: string_params_with_assocs(:plan),
+          subjects: [build(:subject)]
+        )
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.plan_path(conn, :show, id)
@@ -38,7 +40,7 @@ defmodule StudyManagerWeb.PlanControllerTest do
     end
 
     test "renders errors when data is invalid", %{conn: conn} do
-      conn = post(conn, Routes.plan_path(conn, :create), plan: @invalid_attrs)
+      conn = post(conn, Routes.plan_path(conn, :create), plan: @invalid_attrs, subjects: nil)
       assert html_response(conn, 200) =~ "New Plan"
     end
   end
@@ -56,7 +58,11 @@ defmodule StudyManagerWeb.PlanControllerTest do
     setup [:create_plan]
 
     test "redirects when data is valid", %{conn: conn, plan: plan} do
-      conn = put(conn, Routes.plan_path(conn, :update, plan), plan: @update_attrs)
+      conn =
+        put(conn, Routes.plan_path(conn, :update, plan),
+          plan: string_params_with_assocs(:plan, @update_attrs)
+        )
+
       assert redirected_to(conn) == Routes.plan_path(conn, :show, plan)
 
       conn = get(conn, Routes.plan_path(conn, :show, plan))

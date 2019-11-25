@@ -1,15 +1,13 @@
 defmodule StudyManagerWeb.StudySessionControllerTest do
   use StudyManagerWeb.ConnCase
 
-  alias StudyManager.Calendar
+  import StudyManager.Factory
 
-  @create_attrs %{end_time: ~T[14:00:00], start_time: ~T[14:00:00]}
-  @update_attrs %{end_time: ~T[15:01:01], start_time: ~T[15:01:01]}
+  @update_attrs %{end_time: "15:01:01", start_time: "15:01:01"}
   @invalid_attrs %{end_time: nil, start_time: nil}
 
   def fixture(:study_session) do
-    {:ok, study_session} = Calendar.create_study_session(@create_attrs)
-    study_session
+    insert(:study_session)
   end
 
   describe "index" do
@@ -28,7 +26,10 @@ defmodule StudyManagerWeb.StudySessionControllerTest do
 
   describe "create study_session" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.study_session_path(conn, :create), study_session: @create_attrs)
+      conn =
+        post(conn, Routes.study_session_path(conn, :create),
+          study_session: string_params_with_assocs(:study_session)
+        )
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.study_session_path(conn, :show, id)
@@ -61,7 +62,7 @@ defmodule StudyManagerWeb.StudySessionControllerTest do
     test "redirects when data is valid", %{conn: conn, study_session: study_session} do
       conn =
         put(conn, Routes.study_session_path(conn, :update, study_session),
-          study_session: @update_attrs
+          study_session: string_params_with_assocs(:study_session, @update_attrs)
         )
 
       assert redirected_to(conn) == Routes.study_session_path(conn, :show, study_session)

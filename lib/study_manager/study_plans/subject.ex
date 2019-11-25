@@ -7,13 +7,15 @@ defmodule StudyManager.StudyPlans.Subject do
   use Ecto.Schema
   import Ecto.Changeset
 
+  alias StudyManager.Accounts.User
   alias StudyManager.StudyPlans.Plan
 
   schema "subjects" do
     field :color, :string
     field :description, :string
     field :name, :string
-    field :user_id, :id
+
+    belongs_to(:user, User)
 
     many_to_many(:plans, Plan, join_through: "subjects_plans")
 

@@ -1,9 +1,8 @@
 defmodule StudyManagerWeb.SubjectControllerTest do
   use StudyManagerWeb.ConnCase
 
-  alias StudyManager.StudyPlans
+  import StudyManager.Factory
 
-  @create_attrs %{color: "some color", description: "some description", name: "some name"}
   @update_attrs %{
     color: "some updated color",
     description: "some updated description",
@@ -12,8 +11,7 @@ defmodule StudyManagerWeb.SubjectControllerTest do
   @invalid_attrs %{color: nil, description: nil, name: nil}
 
   def fixture(:subject) do
-    {:ok, subject} = StudyPlans.create_subject(@create_attrs)
-    subject
+    insert(:subject)
   end
 
   setup [:create_and_login_user]
@@ -34,7 +32,11 @@ defmodule StudyManagerWeb.SubjectControllerTest do
 
   describe "create subject" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.subject_path(conn, :create), subject: @create_attrs)
+      conn =
+        post(conn, Routes.subject_path(conn, :create),
+          subject: string_params_with_assocs(:subject)
+        )
+
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.subject_path(conn, :show, id)
 
@@ -61,7 +63,11 @@ defmodule StudyManagerWeb.SubjectControllerTest do
     setup [:create_subject]
 
     test "redirects when data is valid", %{conn: conn, subject: subject} do
-      conn = put(conn, Routes.subject_path(conn, :update, subject), subject: @update_attrs)
+      conn =
+        put(conn, Routes.subject_path(conn, :update, subject),
+          subject: string_params_with_assocs(:subject, @update_attrs)
+        )
+
       assert redirected_to(conn) == Routes.subject_path(conn, :show, subject)
 
       conn = get(conn, Routes.subject_path(conn, :show, subject))

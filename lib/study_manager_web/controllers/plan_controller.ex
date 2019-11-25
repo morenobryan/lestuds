@@ -14,8 +14,8 @@ defmodule StudyManagerWeb.PlanController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"plan" => plan_params}) do
-    case StudyPlans.create_plan(plan_params) do
+  def create(conn, %{"plan" => plan_params, "subjects" => subjects_params}) do
+    case StudyPlans.create_plan(plan_params, subjects_params) do
       {:ok, plan} ->
         conn
         |> put_flash(:info, "Plan created successfully.")

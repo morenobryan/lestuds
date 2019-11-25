@@ -1,15 +1,13 @@
 defmodule StudyManagerWeb.AvailabilityControllerTest do
   use StudyManagerWeb.ConnCase
 
-  alias StudyManager.Calendar
+  import StudyManager.Factory
 
-  @create_attrs %{end_time: ~T[14:00:00], start_time: ~T[14:00:00], weekday: 42}
-  @update_attrs %{end_time: ~T[15:01:01], start_time: ~T[15:01:01], weekday: 43}
+  @update_attrs %{end_time: "15:01:01", start_time: "15:01:01", weekday: 43}
   @invalid_attrs %{end_time: nil, start_time: nil, weekday: nil}
 
   def fixture(:availability) do
-    {:ok, availability} = Calendar.create_availability(@create_attrs)
-    availability
+    insert(:availability)
   end
 
   describe "index" do
@@ -28,7 +26,10 @@ defmodule StudyManagerWeb.AvailabilityControllerTest do
 
   describe "create availability" do
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.availability_path(conn, :create), availability: @create_attrs)
+      conn =
+        post(conn, Routes.availability_path(conn, :create),
+          availability: string_params_with_assocs(:availability)
+        )
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.availability_path(conn, :show, id)
@@ -58,7 +59,7 @@ defmodule StudyManagerWeb.AvailabilityControllerTest do
     test "redirects when data is valid", %{conn: conn, availability: availability} do
       conn =
         put(conn, Routes.availability_path(conn, :update, availability),
-          availability: @update_attrs
+          availability: string_params_with_assocs(:availability, @update_attrs)
         )
 
       assert redirected_to(conn) == Routes.availability_path(conn, :show, availability)

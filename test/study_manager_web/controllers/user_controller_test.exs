@@ -1,9 +1,8 @@
 defmodule StudyManagerWeb.UserControllerTest do
   use StudyManagerWeb.ConnCase
 
-  alias StudyManager.Accounts
+  import StudyManager.Factory
 
-  @create_attrs %{email: "some email", full_name: "some full_name", password: "some password"}
   @update_attrs %{
     email: "some updated email",
     full_name: "some updated full_name",
@@ -12,8 +11,7 @@ defmodule StudyManagerWeb.UserControllerTest do
   @invalid_attrs %{email: nil, full_name: nil, password: nil}
 
   def fixture(:user) do
-    {:ok, user} = Accounts.create_user(@create_attrs)
-    user
+    insert(:user)
   end
 
   describe "index" do
@@ -38,7 +36,7 @@ defmodule StudyManagerWeb.UserControllerTest do
     setup [:create_and_login_user]
 
     test "redirects to show when data is valid", %{conn: conn} do
-      conn = post(conn, Routes.user_path(conn, :create), user: @create_attrs)
+      conn = post(conn, Routes.user_path(conn, :create), user: string_params_with_assocs(:user))
 
       assert %{id: id} = redirected_params(conn)
       assert redirected_to(conn) == Routes.user_path(conn, :show, id)
@@ -66,7 +64,11 @@ defmodule StudyManagerWeb.UserControllerTest do
     setup [:create_user, :login_user]
 
     test "redirects when data is valid", %{conn: conn, user: user} do
-      conn = put(conn, Routes.user_path(conn, :update, user), user: @update_attrs)
+      conn =
+        put(conn, Routes.user_path(conn, :update, user),
+          user: string_params_with_assocs(:user, @update_attrs)
+        )
+
       assert redirected_to(conn) == Routes.user_path(conn, :show, user)
 
       conn = get(conn, Routes.user_path(conn, :show, user))
