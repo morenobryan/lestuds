@@ -32,6 +32,7 @@ defmodule StudyManagerWeb.Router do
     resources "/availability", AvailabilityController
     resources "/plan", PlanController
     resources "/sessions", StudySessionController
+    resources "/registration", RegistrationController, only: [:new, :create]
 
     get "/auth/:provider", AuthController, :request
     get "/auth/:provider/callback", AuthController, :callback
