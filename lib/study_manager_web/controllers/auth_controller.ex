@@ -7,6 +7,7 @@ defmodule StudyManagerWeb.AuthController do
 
   plug Ueberauth
 
+  alias Security.Hash
   alias StudyManager.Accounts
   alias StudyManager.Accounts.User
   alias StudyManagerWeb.Guardian.Plug
@@ -25,7 +26,7 @@ defmodule StudyManagerWeb.AuthController do
 
   def callback(%{assigns: %{ueberauth_auth: auth}} = conn, _params) do
     email = auth.info.email
-    password = auth.credentials.other.password
+    password = Hash.digest(auth.credentials.other.password)
 
     case user = Accounts.get_user(%{email: email, password: password}) do
       %User{} ->

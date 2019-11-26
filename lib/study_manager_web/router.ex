@@ -34,6 +34,7 @@ defmodule StudyManagerWeb.Router do
     resources "/sessions", StudySessionController
     resources "/registration", RegistrationController, only: [:new, :create]
 
+    # Ueberauth-related routes
     get "/auth/:provider", AuthController, :request
     get "/auth/:provider/callback", AuthController, :callback
     post "/auth/:provider/callback", AuthController, :callback

@@ -24,7 +24,7 @@ defmodule StudyManager.MixProject do
   def application do
     [
       mod: {StudyManager.Application, []},
-      extra_applications: [:logger, :runtime_tools, :ueberauth, :ueberauth_identity]
+      extra_applications: [:crypto, :logger, :runtime_tools, :ueberauth, :ueberauth_identity]
     ]
   end
 

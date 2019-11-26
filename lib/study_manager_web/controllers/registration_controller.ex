@@ -13,8 +13,16 @@ defmodule StudyManagerWeb.RegistrationController do
     render(conn, "new.html", changeset: changeset)
   end
 
-  def create(conn, %{"user" => user_params}) do
-    case Accounts.create_user(user_params) do
+  def create(conn, %{
+        "user" => %{"email" => email, "full_name" => full_name, "password" => password}
+      }) do
+    digested_password = Security.Hash.digest(password)
+
+    case Accounts.create_user(%{
+           "email" => email,
+           "full_name" => full_name,
+           "password" => digested_password
+         }) do
       {:ok, _user} ->
         conn
         |> put_flash(:info, "User created successfully.")
