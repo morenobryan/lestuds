@@ -12,7 +12,8 @@
       <section class="container">
         <nav role="navigation">
           <ul>
-            <li><a href="https://hexdocs.pm/phoenix/overview.html">Get Started</a></li>
+            <li><a href="<%= Routes.subject_path(@conn, :index) %>">Subjects</a></li>
+            <li><a href="<%= Routes.plan_path(@conn, :index) %>">Study Plans</a></li>
             <%= if @user_signed_in? do %>
               <li>Welcome, <%= @current_user.full_name %></li>
               <li><a href="<%= Routes.auth_path(@conn, :delete, :identity) %>">Logout</a></li>
