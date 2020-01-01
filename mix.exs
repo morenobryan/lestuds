@@ -7,6 +7,8 @@ defmodule StudyManager.MixProject do
       version: "0.1.0",
       elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env()),
+      deps_path: mix_deps_path(Mix.env()),
+      build_path: System.get_env("MIX_BUILD_PATH_ROOT"),
       compilers: [:phoenix, :gettext] ++ Mix.compilers(),
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
@@ -32,6 +34,8 @@ defmodule StudyManager.MixProject do
   defp elixirc_paths(:test), do: ["lib", "test/support"]
   defp elixirc_paths(_), do: ["lib"]
 
+  defp mix_deps_path(_env), do: System.get_env("MIX_DEPS_PATH") || "./deps"
+
   # Specifies your project dependencies.
   #
   # Type `mix help deps` for examples and options.
@@ -54,7 +58,8 @@ defmodule StudyManager.MixProject do
       {:inch_ex, "~> 2.0", only: [:dev, :test]},
       {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false},
       {:sobelow, "~> 0.7", only: [:dev, :test], runtime: false},
-      {:ex_machina, "~> 2.3", only: :test}
+      {:ex_machina, "~> 2.3", only: :test},
+      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end
 

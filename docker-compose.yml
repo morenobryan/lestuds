@@ -1,0 +1,50 @@
+version: "3.7"
+
+services:
+  postgres:
+    image: "postgres:12-alpine"
+    restart: always
+    environment:
+      POSTGRES_USER: study_manager
+      POSTGRES_PASSWORD: letmein
+    ports:
+      - "54321:5432"
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+
+  app:
+    build:
+      context: .
+      target: phoenix_base
+    command: mix phx.server
+    ports:
+      - "4000:4000"
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+        consistency: cached
+    depends_on:
+      - postgres
+
+  test:
+    build:
+      context: .
+      target: phoenix_base
+    command: mix test.watch
+    environment:
+      MIX_ENV: test
+    volumes:
+      - type: bind
+        source: ./
+        target: /app
+        consistency: cached
+    depends_on:
+      - postgres
+
+volumes:
+  pg_data:
+
+networks:
+  default:
+    name: study_manager.local
