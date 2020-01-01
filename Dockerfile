@@ -1,6 +1,8 @@
 FROM elixir:1.9-alpine AS phoenix_base
 
 # Need inotify for watchers to work
+#      npm for the assets
+#      bash for the test watcher
 RUN apk --no-cache --update add inotify-tools npm bash
 
 # Update hex and rebar
