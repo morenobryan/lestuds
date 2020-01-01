@@ -54,7 +54,8 @@ defmodule StudyManager.MixProject do
       {:inch_ex, "~> 2.0", only: [:dev, :test]},
       {:dialyxir, "~> 1.0.0-rc.6", only: [:dev], runtime: false},
       {:sobelow, "~> 0.7", only: [:dev, :test], runtime: false},
-      {:ex_machina, "~> 2.3", only: :test}
+      {:ex_machina, "~> 2.3", only: :test},
+      {:mix_test_watch, "~> 1.0", only: [:dev, :test], runtime: false}
     ]
   end
 
