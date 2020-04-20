@@ -10,7 +10,7 @@ jobs:
       postgres:
         image: postgres:12-alpine
         env:
-          POSTGRES_HOST: study_manager
+          POSTGRES_USER: study_manager
           POSTGRES_PASSWORD: letmein
         options: >-
           --health-cmd pg_isready
@@ -31,8 +31,14 @@ jobs:
     - name: Create Test Database
       run: mix ecto.setup
       env:
-        POSTGRES_HOST: study_manager
-        POSTGRES_PASSWORD: letmein
+        POSTGRES_HOST: postgres
         POSTGRES_PORT: 5432
+        POSTGRES_USER: study_manager
+        POSTGRES_PASSWORD: letmein
     - name: Run Tests
       run: mix test
+      env:
+        POSTGRES_HOST: postgres
+        POSTGRES_PORT: 5432
+        POSTGRES_USER: study_manager
+        POSTGRES_PASSWORD: letmein
