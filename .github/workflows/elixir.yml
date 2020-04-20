@@ -31,6 +31,7 @@ jobs:
     - name: Create Test Database
       run: mix ecto.setup
       env:
+        MIX_ENV: test
         POSTGRES_HOST: postgres
         POSTGRES_PORT: 5432
         POSTGRES_USER: study_manager
