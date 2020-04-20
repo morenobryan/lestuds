@@ -25,13 +25,18 @@ This app is Dockerized for development mode and its dependency services are prov
 
 The fastest way to get the app server and tests running:
 
+### First-time setup
+
 ```shell
-# first-time setup only
 # --pull ensures you get the latest base image of Elixir
 docker-compose build --pull
 docker-compose run --rm app mix ecto.setup
+docker-compose run --rm test mix ecto.setup
+```
 
-# every time
+### Every time
+
+```shell
 docker-compose up
 ```
 
