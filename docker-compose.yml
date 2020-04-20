@@ -21,6 +21,8 @@ services:
     build:
       context: .
       target: phoenix_base
+    stdin_open: true
+    tty: true
     command: mix phx.server
     ports:
       - "4000:4000"
@@ -35,6 +37,8 @@ services:
     build:
       context: .
       target: phoenix_base
+    stdin_open: true
+    tty: true
     command: mix test.watch
     environment:
       MIX_ENV: test
