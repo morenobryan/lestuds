@@ -29,10 +29,10 @@ jobs:
         mix local.hex --force
         mix deps.get
     - name: Create Test Database
-        run: mix ecto.setup
-        env:
-          POSTGRES_HOST: study_manager
-          POSTGRES_PASSWORD: letmein
-          POSTGRES_PORT: 5432
+      run: mix ecto.setup
+      env:
+        POSTGRES_HOST: study_manager
+        POSTGRES_PASSWORD: letmein
+        POSTGRES_PORT: 5432
     - name: Run Tests
       run: mix test
