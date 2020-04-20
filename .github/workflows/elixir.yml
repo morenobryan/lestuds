@@ -19,7 +19,7 @@ jobs:
           --health-retries 5
 
     container:
-      image: elixir:1.9-alpine
+      image: elixir:1.10-alpine
 
     steps:
     - uses: actions/checkout@v2
