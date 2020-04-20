@@ -23,7 +23,8 @@ services:
       target: phoenix_base
     stdin_open: true
     tty: true
-    command: mix phx.server
+    command: >
+      ensure_deps iex --name phx@app.features.local -S mix phx.server
     ports:
       - "4000:4000"
     volumes:
@@ -39,7 +40,7 @@ services:
       target: phoenix_base
     stdin_open: true
     tty: true
-    command: mix test.watch
+    command: ensure_deps mix test.watch
     environment:
       MIX_ENV: test
     volumes:

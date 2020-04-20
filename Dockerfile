@@ -21,6 +21,8 @@ ENV MIX_BUILD_PATH_ROOT /opt/mix/build
 
 COPY mix.exs mix.lock ./
 
+COPY docker/ensure_deps.sh /opt/bin/ensure_deps
+
 RUN mix deps.get
 
 # Prepend /opt/bin to the PATH for binaries we add to the image
