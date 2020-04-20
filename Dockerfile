@@ -16,10 +16,12 @@ WORKDIR /app
 ENV MIX_DEPS_PATH /opt/mix/deps
 
 # Move the build path out of /app so the build artifacts only ever live in
-# the docker image/container and not ever over a bind mount
+# the docker image/container and not ever over a mounted volume
 ENV MIX_BUILD_PATH_ROOT /opt/mix/build
 
 COPY mix.exs mix.lock ./
+
+COPY docker/ensure_deps.sh /opt/bin/ensure_deps
 
 RUN mix deps.get
 
