@@ -14,8 +14,21 @@ defmodule StudyManagerWeb.AuthController do
   alias Ueberauth.Strategy.Helpers
 
   def request(conn, _params) do
-    changeset = Accounts.change_user(%User{})
-    render(conn, "request.html", callback_url: Helpers.callback_url(conn), changeset: changeset)
+    case conn.assigns.user_signed_in? do
+      true ->
+        conn
+        |> put_flash(:info, "You are already logged in.")
+        |> redirect(to: "/")
+      _ ->
+        changeset = Accounts.change_user(%User{})
+
+        render(
+          conn,
+          "request.html",
+          callback_url: Helpers.callback_url(conn),
+          changeset: changeset
+        )
+    end
   end
 
   def callback(%{assigns: %{ueberauth_failure: _fails}} = conn, _params) do
@@ -38,7 +51,7 @@ defmodule StudyManagerWeb.AuthController do
       nil ->
         conn
         |> put_flash(:error, "User not found with those credentials.")
-        |> redirect(to: "/")
+        |> redirect(to: Routes.auth_path(conn, :request, :identity))
     end
   end
 

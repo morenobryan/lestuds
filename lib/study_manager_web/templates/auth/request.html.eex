@@ -1,3 +1,5 @@
+<h1>Login</h1>
+
 <%= form_for @changeset, @callback_url, fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
