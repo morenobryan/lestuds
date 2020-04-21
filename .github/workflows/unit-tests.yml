@@ -22,7 +22,8 @@ jobs:
       image: elixir:1.10-alpine
 
     steps:
-    - uses: actions/checkout@v2
+    - name: Checkout
+      uses: actions/checkout@v2
     - name: Install Dependencies
       run: |
         mix local.rebar --force

@@ -1,0 +1,15 @@
+version: "3.7"
+
+services:
+  cypress:
+    image: cypress/included:3.8.3
+    depends_on:
+      - app
+    environment:
+      # pass base url to test pointing at the web application
+      - CYPRESS_baseUrl=http://app:4000
+    # share the current folder as volume to avoid copying
+    working_dir: /e2e
+    volumes:
+      - ./cypress:/e2e/cypress:cached
+      - ./cypress.json:/e2e/cypress.json
