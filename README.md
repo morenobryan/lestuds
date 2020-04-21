@@ -42,3 +42,88 @@ docker-compose up
 
 - Main app will be listening at [http://localhost:4000](http://localhost:4000)
 - A file change watcher for unit tests, credo, and code formatting will be running
+
+## Running tests
+
+In this app, you can either run the unit tests or the integration/E2E (end-to-end) tests.
+
+### Unit tests
+
+When you fire up `docker-compose up`, there's already a test watcher running that will automatically
+re-run the tests whenever you change a file that is related to the tests. However, if you wanna run
+all the tests manually, you can use the following command:
+
+```shell
+docker-compose run --rm test mix test
+```
+
+### E2E tests
+
+The E2E tests use [Cypress](https://www.cypress.io) as the tool. We can run the tests either
+headlessly or with the interactive mode. The interactive mode opens a window with the list of tests
+and allows you to open a specific test and see it running live. Then you can time-travel, inspect
+individual results and many other things.
+
+#### Headless mode
+
+To run the tests in headless, we can use [Docker](https://www.docker.com) for that. Simply run the
+following command to run all the tests:
+
+```shell
+docker-compose -f docker-compose.yml -f docker-compose.e2e.yml up --exit-code-from cypress
+```
+
+_Note_: `--exit-code-from cypress` will make sure that when the Cypress tests end, the containers
+are also exited and the resulting status code is the one from Cypress.
+
+If you want to run an **individual test**, you can run the following command:
+
+```shell
+docker-compose -f docker-compose.yml -f docker-compose.e2e.yml run --rm cypress run --spec "cypress/integration/example_spec.js"
+```
+
+_Note_: You can customize the previous command to run multiple tests at once, to run tests tagged
+with a certain tag and some other things. For more info, check the
+[Cypress manual](https://docs.cypress.io/guides/guides/command-line.html#cypress-run)
+
+#### Interactive mode
+
+Theoretically, interactive mode can be run on Docker. However, outside of Linux, we would need an
+X11 server installed on the host to be able to forward the interface to the host machine. While
+there
+[are some solutions](https://www.cypress.io/blog/2019/05/02/run-cypress-with-a-single-docker-command/)
+to this, on our tests they didn't work at all.
+
+Therefore, to run Cypress on interactive mode, you need to run the Cypress client natively. The
+Cypress client is based on Electron, which makes it cross-platform.
+
+##### macOS first-time setup
+
+This setup assumes you have [Homebrew](https://brew.sh) installed. After having it installed,
+install the necessary dependencies with:
+
+```shell
+brew bundle
+```
+
+Then, install the Cypress bundle with:
+
+```shell
+npm install
+```
+
+##### Opening interactive mode
+
+**Before** opening Cypress, we need to start our application server with:
+
+```shell
+docker-compose up
+```
+
+And finally, open Cypress window:
+
+```shell
+npx cypress open
+```
+
+Then you can select the test you want to run and start running and viewing them.
