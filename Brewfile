@@ -1,4 +1,1 @@
-tap "homebrew/cask"
-cask_args appdir: "/Applications"
-
-cask "xQuartz"
+brew "node@12"
