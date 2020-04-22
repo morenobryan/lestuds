@@ -30,4 +30,7 @@ ENV PATH "/opt/bin:${PATH}"
 
 EXPOSE 4000
 
+# Expose the port of the mocks web server
+EXPOSE 4001
+
 CMD [ "mix", "phx.server" ]
