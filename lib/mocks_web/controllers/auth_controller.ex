@@ -14,14 +14,20 @@ defmodule MocksWeb.AuthController do
   alias Ueberauth.Strategy.Helpers
 
   def create(conn, %{"user" => %{"email" => email, "password" => password}}) do
-    password = Hash.digest(password)
+    digested_password = Hash.digest(password)
 
-    case user = Accounts.get_user(%{email: email, password: password}) do
+    case user = Accounts.get_user(%{email: email, password: digested_password}) do
       %User{} ->
         conn
         |> put_status(200)
         |> Plug.sign_in(user)
-        |> json(%{"data" => "Successfully authenticated."})
+        |> json(%{
+          "data" => %{
+            "email" => user.email,
+            "full_name" => user.full_name,
+            "password" => password
+          }
+        })
 
       nil ->
         conn
