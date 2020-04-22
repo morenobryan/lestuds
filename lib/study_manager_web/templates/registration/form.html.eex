@@ -1,4 +1,4 @@
-<%= form_for @changeset, @action, fn f -> %>
+<%= form_for @changeset, @action, [data: [test: "registration-form"]], fn f -> %>
   <%= if @changeset.action do %>
     <div class="alert alert-danger">
       <p>Oops, something went wrong! Please check the errors below.</p>
@@ -6,18 +6,18 @@
   <% end %>
 
   <%= label f, :full_name %>
-  <%= text_input f, :full_name %>
+  <%= text_input f, :full_name, data: [test: "full_name"] %>
   <%= error_tag f, :full_name %>
 
   <%= label f, :email %>
-  <%= text_input f, :email %>
+  <%= text_input f, :email, data: [test: "email"] %>
   <%= error_tag f, :email %>
 
   <%= label f, :password %>
-  <%= password_input f, :password %>
+  <%= password_input f, :password, data: [test: "password"] %>
   <%= error_tag f, :password %>
 
   <div>
-    <%= submit "Register" %>
+    <%= submit "Register", data: [test: "submit"] %>
   </div>
 <% end %>

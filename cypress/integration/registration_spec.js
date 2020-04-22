@@ -9,18 +9,18 @@ describe('User Registration', () => {
     const id = uuid()
     const fullName = `Test Name ${id}`
     const email = `test${id}@example.com`
-    cy.get('#user_full_name')
+    cy.get('[data-test=full_name]')
       .type(fullName)
       .should('have.value', fullName)
 
-    cy.get('#user_email')
+    cy.get('[data-test=email]')
       .type(email)
       .should('have.value', email)
 
-    cy.get('#user_password')
+    cy.get('[data-test=password]')
       .type('test')
 
-    cy.get('form').submit()
+    cy.get('[data-test=registration-form]').submit()
 
     cy.contains('User created successfully.')
   })
