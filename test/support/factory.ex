@@ -1,6 +1,7 @@
 defmodule StudyManager.Factory do
   use ExMachina.Ecto, repo: StudyManager.Repo
 
+  alias Security.Hash
   alias StudyManager.Accounts.User
   alias StudyManager.Calendar.{Availability, StudySession}
   alias StudyManager.StudyPlans.{Plan, Subject}
@@ -9,7 +10,7 @@ defmodule StudyManager.Factory do
     %User{
       email: sequence(:email, &"email-#{&1}@example.com"),
       full_name: "Bryan Bryerson",
-      password: sequence(:email, &"testing#{&1}")
+      password: Hash.digest("test")
     }
   end
 

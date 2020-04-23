@@ -19,5 +19,5 @@
 
 </ul>
 
-<span><%= link "Edit", to: Routes.subject_path(@conn, :edit, @subject) %></span>
-<span><%= link "Back", to: Routes.subject_path(@conn, :index) %></span>
+<span><%= link "Edit", to: Routes.subject_path(@conn, :edit, @subject), data: [test: "edit-link"] %></span>
+<span><%= link "Back", to: Routes.subject_path(@conn, :index), data: [test: "back-link"] %></span>

@@ -20,7 +20,7 @@
       <td>
         <%= link "Show", to: Routes.subject_path(@conn, :show, subject) %>
         <%= link "Edit", to: Routes.subject_path(@conn, :edit, subject) %>
-        <%= link "Delete", to: Routes.subject_path(@conn, :delete, subject), method: :delete, data: [confirm: "Are you sure?"] %>
+        <%= link "Delete", to: Routes.subject_path(@conn, :delete, subject), method: :delete, data: [confirm: "Are you sure?", test: "delete-link"] %>
       </td>
     </tr>
 <% end %>

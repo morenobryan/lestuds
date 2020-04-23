@@ -16,7 +16,7 @@ defmodule StudyManager.Application do
       StudyManagerWeb.Endpoint
       # Starts a worker by calling: StudyManager.Worker.start_link(arg)
       # {StudyManager.Worker, arg},
-    ]
+    ] ++ optional_children()
 
     # See https://hexdocs.pm/elixir/Supervisor.html
     # for other strategies and supported options
@@ -29,5 +29,16 @@ defmodule StudyManager.Application do
   def config_change(changed, _new, removed) do
     Endpoint.config_change(changed, removed)
     :ok
+  end
+
+  defp optional_children do
+    # if the given applications were configured (config.exs, dev.exs, etc)
+    # then include them as children to supervise
+    include_if_configured = [MocksWeb.Endpoint]
+
+    :study_manager
+    |> Application.get_all_env()
+    |> Keyword.take(include_if_configured)
+    |> Keyword.keys()
   end
 end
