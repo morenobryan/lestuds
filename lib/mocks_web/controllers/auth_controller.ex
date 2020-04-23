@@ -11,7 +11,6 @@ defmodule MocksWeb.AuthController do
   alias StudyManager.Accounts
   alias StudyManager.Accounts.User
   alias StudyManagerWeb.Guardian.Plug
-  alias Ueberauth.Strategy.Helpers
 
   def create(conn, %{"user" => %{"email" => email, "password" => password}}) do
     digested_password = Hash.digest(password)
@@ -19,8 +18,8 @@ defmodule MocksWeb.AuthController do
     case user = Accounts.get_user(%{email: email, password: digested_password}) do
       %User{} ->
         conn
-        |> put_status(200)
         |> Plug.sign_in(user)
+        |> put_status(200)
         |> json(%{
           "data" => %{
             "email" => user.email,
@@ -31,15 +30,15 @@ defmodule MocksWeb.AuthController do
 
       nil ->
         conn
-        |> put_status(200)
+        |> put_status(500)
         |> json(%{"errors" => "User not found with those credentials."})
     end
   end
 
   def delete(conn, _params) do
     conn
-    |> put_status(200)
     |> Plug.sign_out()
+    |> put_status(200)
     |> json(%{"data" => "You have been logged out"})
   end
 end

@@ -7,6 +7,7 @@ defmodule MocksWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug :fetch_session
 
     plug(
       Guardian.Plug.Pipeline,
