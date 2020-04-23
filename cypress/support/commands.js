@@ -30,7 +30,7 @@ Cypress.Commands.add("signUp", () => {
   const fullName = `Test Name ${id}`
   const email = `test${id}@example.com`
 
-  return cy.request('POST', 'http://localhost:4001/mocks/registration',
+  cy.request('POST', `${Cypress.env('mock_base_url')}mocks/registration`,
     {
       user: {
         email: email,
@@ -38,11 +38,11 @@ Cypress.Commands.add("signUp", () => {
         password: 'test'
       }
     }
-  )
+  ).its('body.data').as('registeredUser')
 })
 
 Cypress.Commands.add("login", (email, password) => {
-  cy.request('POST', 'http://localhost:4001/mocks/auth',
+  cy.request('POST', `${Cypress.env('mock_base_url')}mocks/auth`,
     {
       user: {
         email: email,
@@ -53,7 +53,7 @@ Cypress.Commands.add("login", (email, password) => {
 })
 
 Cypress.Commands.add("signUpAndLogin", () => {
-  cy.signUp().then((response) => {
-    cy.login(response.body.data.email, response.body.data.password)
+  cy.signUp().then((yieldData) => {
+    cy.login(yieldData.email, yieldData.password)
   })
 })

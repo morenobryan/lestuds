@@ -2,11 +2,11 @@
 
 describe('User Login', () => {
   beforeEach(function() {
-    cy.signUpAndLogin()
+    cy.signUp()
   })
 
   it('Logs an exisiting user in', function() {
-    const { email, password } = this.currentUser
+    const { email, password } = this.registeredUser
 
     cy.visit('/auth/identity')
     cy.url().should('include', '/auth/identity')
