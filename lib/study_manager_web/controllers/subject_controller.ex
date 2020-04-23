@@ -17,6 +17,9 @@ defmodule StudyManagerWeb.SubjectController do
   end
 
   def create(conn, %{"subject" => subject_params}) do
+    subject_params = Map.merge(
+      subject_params, %{"user_id" => conn.assigns.current_user.id}
+    )
     case StudyPlans.create_subject(subject_params) do
       {:ok, subject} ->
         conn
