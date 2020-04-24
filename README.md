@@ -36,8 +36,6 @@ docker-compose run --rm app mix ecto.setup
 docker-compose run --rm app bash -c 'cd assets && npm install'
 # To setup the database for the test environment
 docker-compose run --rm test mix ecto.setup
-# To install the Cypress binary
-npm install
 ```
 
 ### Every time
