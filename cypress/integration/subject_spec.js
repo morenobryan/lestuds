@@ -11,10 +11,12 @@ function fillSubjectForm(name, description, color) {
     .type(description)
     .should('have.value', description)
 
-  cy.get('[data-test=color]')
+  if (color) {
+    cy.get('[data-test=color]')
     .clear()
     .type(color)
     .should('have.value', color)
+  }
 }
 
 function submitSubjectForm() {
@@ -38,8 +40,7 @@ describe('Subjects', () => {
 
     let name = "Test Subject"
     let description = "Test Description"
-    let color = "#FF0000"
-    fillSubjectForm(name, description, color)
+    fillSubjectForm(name, description)
     submitSubjectForm()
 
     // Show the newly created subject
@@ -51,14 +52,14 @@ describe('Subjects', () => {
 
       cy.contains(name)
       cy.contains(description)
-      cy.contains(color)
+      cy.contains("#666666")
 
       cy.get('[data-test=edit-link]').click()
 
       // Update the created subject
       name = "Test Updated Subject"
       description = "Test Updated Description"
-      color = "#FF00FF"
+      let color = "#FF00FF"
       fillSubjectForm(name, description, color)
       submitSubjectForm()
 
