@@ -17,9 +17,8 @@ defmodule StudyManagerWeb.SubjectController do
   end
 
   def create(conn, %{"subject" => subject_params}) do
-    subject_params = Map.merge(
-      subject_params, %{"user_id" => conn.assigns.current_user.id}
-    )
+    subject_params = subject_params |> set_logged_in_user_id(conn)
+
     case StudyPlans.create_subject(subject_params) do
       {:ok, subject} ->
         conn
@@ -63,5 +62,9 @@ defmodule StudyManagerWeb.SubjectController do
     conn
     |> put_flash(:info, "Subject deleted successfully.")
     |> redirect(to: Routes.subject_path(conn, :index))
+  end
+
+  defp set_logged_in_user_id(params, conn) do
+    Map.merge(params, %{"user_id" => conn.assigns.current_user.id})
   end
 end

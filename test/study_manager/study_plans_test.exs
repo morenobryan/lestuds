@@ -43,6 +43,16 @@ defmodule StudyManager.StudyPlansTest do
       assert subject.name == "Bryan Bryerson"
     end
 
+    test "create_subject/1 without a color saves the default color" do
+      subject_params = Map.delete(string_params_with_assocs(:subject), "color")
+      assert {:ok, %Subject{} = subject} =
+        StudyPlans.create_subject(subject_params)
+
+      assert subject.color == "#666666"
+      assert subject.description == "some description"
+      assert subject.name == "Bryan Bryerson"
+    end
+
     test "create_subject/1 with invalid data returns error changeset" do
       assert {:error, %Ecto.Changeset{}} = StudyPlans.create_subject(@invalid_attrs)
     end

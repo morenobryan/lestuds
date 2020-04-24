@@ -11,7 +11,7 @@ defmodule StudyManager.StudyPlans.Subject do
   alias StudyManager.StudyPlans.Plan
 
   schema "subjects" do
-    field :color, :string
+    field :color, :string, default: "#666666"
     field :description, :string
     field :name, :string
 
@@ -26,6 +26,6 @@ defmodule StudyManager.StudyPlans.Subject do
   def changeset(subject, attrs) do
     subject
     |> cast(attrs, [:name, :description, :color, :user_id])
-    |> validate_required([:name, :description, :color, :user_id])
+    |> validate_required([:name, :description, :user_id])
   end
 end
