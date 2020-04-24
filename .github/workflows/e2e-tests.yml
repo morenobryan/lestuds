@@ -13,6 +13,6 @@ jobs:
       uses: cypress-io/github-action@v1
       with:
         build: docker-compose run --rm app mix ecto.setup
-        start: docker-compose up app
+        start: docker-compose up
         wait-on: 'http://localhost:4000/'
         wait-on-timeout: 120
