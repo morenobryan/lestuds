@@ -34,6 +34,20 @@ defmodule StudyManager.StudyPlansTest do
       assert StudyPlans.get_subject!(subject.id) == subject
     end
 
+    test "get_subject!/1 returns the subject with given id/user_id map" do
+      subject = subject_fixture()
+      subject_map = %{"id" => subject.id, "user_id" => subject.user_id}
+      assert StudyPlans.get_subject!(subject_map) == subject
+    end
+
+    test "get_subject/1 returns nil with invalid id" do
+      refute StudyPlans.get_subject(0)
+    end
+
+    test "get_subject/1 returns nil with invalid id/user_id map" do
+      refute StudyPlans.get_subject(%{"id" => 0, "user_id" => 0})
+    end
+
     test "create_subject/1 with valid data creates a subject" do
       assert {:ok, %Subject{} = subject} =
                StudyPlans.create_subject(string_params_with_assocs(:subject))

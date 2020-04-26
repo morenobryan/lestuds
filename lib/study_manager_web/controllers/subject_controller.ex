@@ -17,7 +17,7 @@ defmodule StudyManagerWeb.SubjectController do
   end
 
   def create(conn, %{"subject" => subject_params}) do
-    subject_params = subject_params |> set_logged_in_user_id(conn)
+    subject_params = conn |> merge_current_user_id(subject_params)
 
     case StudyPlans.create_subject(subject_params) do
       {:ok, subject} ->
@@ -42,7 +42,8 @@ defmodule StudyManagerWeb.SubjectController do
   end
 
   def update(conn, %{"id" => id, "subject" => subject_params}) do
-    subject = StudyPlans.get_subject!(id)
+    map = conn |> merge_current_user_id(%{"id" => id})
+    subject = StudyPlans.get_subject!(map)
 
     case StudyPlans.update_subject(subject, subject_params) do
       {:ok, subject} ->
@@ -64,7 +65,7 @@ defmodule StudyManagerWeb.SubjectController do
     |> redirect(to: Routes.subject_path(conn, :index))
   end
 
-  defp set_logged_in_user_id(params, conn) do
+  defp merge_current_user_id(conn, %{} = params) do
     Map.merge(params, %{"user_id" => conn.assigns.current_user.id})
   end
 end

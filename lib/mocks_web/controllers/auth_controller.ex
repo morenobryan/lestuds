@@ -15,7 +15,7 @@ defmodule MocksWeb.AuthController do
   def create(conn, %{"user" => %{"email" => email, "password" => password}}) do
     digested_password = Hash.digest(password)
 
-    case user = Accounts.get_user(%{email: email, password: digested_password}) do
+    case user = Accounts.get_user(%{"email" => email, "password" => digested_password}) do
       %User{} ->
         conn
         |> Plug.sign_in(user)

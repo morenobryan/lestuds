@@ -28,14 +28,14 @@ defmodule StudyManager.Accounts do
 
   ## Examples
 
-      iex> get_user!(%{email: "bryan@example.com", password: "test123"})
+      iex> get_user!(%{"email" => "bryan@example.com", "password" => "test123"})
       %User{}
 
-      iex> get_user!(%{email: "invalid@example.com", password: "invalid"})
+      iex> get_user!(%{"email" => "invalid@example.com", "password" => "invalid"})
       ** (Ecto.NoResultsError)
 
   """
-  def get_user!(%{email: email, password: password}) do
+  def get_user!(%{"email" => email, "password" => password}) do
     Repo.get_by!(User, email: email, password: password)
   end
 
@@ -60,14 +60,14 @@ defmodule StudyManager.Accounts do
 
   ## Examples
 
-      iex> get_user!(%{email: "bryan@example.com", password: "test123"})
+      iex> get_user!(%{"email" => "bryan@example.com", "password" => "test123"})
       %User{}
 
-      iex> get_user!(%{email: "invalid@example.com", password: "invalid"})
+      iex> get_user!(%{"email" => "invalid@example.com", "password" => "invalid"})
       nil
 
   """
-  def get_user(%{email: email, password: password}) do
+  def get_user(%{"email" => email, "password" => password}) do
     Repo.get_by(User, email: email, password: password)
   end
 

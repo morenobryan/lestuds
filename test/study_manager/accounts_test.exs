@@ -43,14 +43,14 @@ defmodule StudyManager.AccountsTest do
 
     test "get_user!/1 returns the user with given email/password map" do
       user = user_fixture()
-      assert Accounts.get_user!(%{email: "some email", password: "some password"}) == user
+      assert Accounts.get_user!(%{"email" => "some email", "password" => "some password"}) == user
     end
 
     test "get_user!/1 raises an exception with invalid email/password map" do
       assert_raise Ecto.NoResultsError,
                    ~r/^expected at least one result but got none in query:/,
                    fn ->
-                     Accounts.get_user!(%{email: "some email", password: "incorrect password"})
+                     Accounts.get_user!(%{"email" => "some email", "password" => "incorrect password"})
                    end
     end
 
@@ -65,11 +65,11 @@ defmodule StudyManager.AccountsTest do
 
     test "get_user/1 returns the user with given email/password map" do
       user = user_fixture()
-      assert Accounts.get_user(%{email: "some email", password: "some password"}) == user
+      assert Accounts.get_user(%{"email" => "some email", "password" => "some password"}) == user
     end
 
     test "get_user/1 returns nil with invalid email/password map" do
-      refute Accounts.get_user(%{email: "some email", password: "incorrect password"})
+      refute Accounts.get_user(%{"email" => "some email", "password" => "incorrect password"})
     end
 
     test "create_user/1 with valid data creates a user" do

@@ -41,7 +41,7 @@ defmodule StudyManagerWeb.AuthController do
     email = auth.info.email
     password = Hash.digest(auth.credentials.other.password)
 
-    case user = Accounts.get_user(%{email: email, password: password}) do
+    case user = Accounts.get_user(%{"email" => email, "password" => password}) do
       %User{} ->
         conn
         |> put_flash(:info, "Successfully authenticated.")

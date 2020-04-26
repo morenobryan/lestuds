@@ -24,6 +24,24 @@ defmodule StudyManager.StudyPlans do
   end
 
   @doc """
+  Gets a single subject by an id and a user_id.
+
+  Raises `Ecto.NoResultsError` if the Subject does not exist.
+
+  ## Examples
+
+      iex> get_subject!(%{id: 1, user_id: 1})
+      %Subject{}
+
+      iex> get_subject!(%{id: 0, user_id: 9999})
+      ** (Ecto.NoResultsError)
+
+  """
+  def get_subject!(%{"id" => id, "user_id" => user_id}) do
+    Repo.get_by!(Subject, id: id, user_id: user_id)
+  end
+
+  @doc """
   Gets a single subject.
 
   Raises `Ecto.NoResultsError` if the Subject does not exist.
@@ -38,6 +56,36 @@ defmodule StudyManager.StudyPlans do
 
   """
   def get_subject!(id), do: Repo.get!(Subject, id)
+
+  @doc """
+  Gets a single subject by an id and a user_id.
+
+  ## Examples
+
+      iex> get_subject(%{id: 1, user_id: 1})
+      %Subject{}
+
+      iex> get_subject(%{id: 0, user_id: 9999})
+      nil
+
+  """
+  def get_subject(%{"id" => id, "user_id" => user_id}) do
+    Repo.get_by(Subject, id: id, user_id: user_id)
+  end
+
+  @doc """
+  Gets a single subject.
+
+  ## Examples
+
+      iex> get_subject!(123)
+      %Subject{}
+
+      iex> get_subject!(456)
+      nil
+
+  """
+  def get_subject(id), do: Repo.get(Subject, id)
 
   @doc """
   Creates a subject.

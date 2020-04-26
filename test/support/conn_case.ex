@@ -49,6 +49,8 @@ defmodule StudyManagerWeb.ConnCase do
         # but somehow it's the only way of making the sign in process work
         |> Map.update!(:state, fn _ -> :set end)
         |> Guardian.sign_in(user)
+        |> assign(:current_user, user)
+        |> assign(:user_signed_in?, true)
         |> send_resp(200, "Flush the session")
       end
 
@@ -60,6 +62,8 @@ defmodule StudyManagerWeb.ConnCase do
           # but somehow it's the only way of making the sign in process work
           |> Map.update!(:state, fn _ -> :set end)
           |> Guardian.sign_out()
+          |> assign(:current_user, nil)
+          |> assign(:user_signed_in?, false)
           |> send_resp(200, "Flush the session")
 
         {:ok, conn: conn, user: nil}

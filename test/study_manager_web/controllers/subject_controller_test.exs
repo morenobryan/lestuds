@@ -10,8 +10,8 @@ defmodule StudyManagerWeb.SubjectControllerTest do
   }
   @invalid_attrs %{color: nil, description: nil, name: nil}
 
-  def fixture(:subject) do
-    insert(:subject)
+  def fixture(:subject, attrs) do
+    insert(:subject, attrs)
   end
 
   setup [:create_and_login_user]
@@ -93,8 +93,8 @@ defmodule StudyManagerWeb.SubjectControllerTest do
     end
   end
 
-  defp create_subject(_) do
-    subject = fixture(:subject)
+  defp create_subject(%{user: user}) do
+    subject = insert(:subject, %{user: user})
     {:ok, subject: subject}
   end
 end
