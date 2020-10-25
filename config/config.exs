@@ -15,7 +15,7 @@ config :study_manager, StudyManagerWeb.Endpoint,
   url: [host: "localhost"],
   secret_key_base: "hvuQJYPxR39qidqDnP6FhmurG0FMDWCVz4S4JQdys3npgKHZ32ulgYVyM/8Nff2Z",
   render_errors: [view: StudyManagerWeb.ErrorView, accepts: ~w(html json)],
-  pubsub: [name: StudyManager.PubSub, adapter: Phoenix.PubSub.PG2]
+  pubsub_server: StudyManager.PubSub
 
 # Configures Elixir's Logger
 config :logger, :console,
