@@ -1,4 +1,4 @@
-FROM elixir:1.10-alpine AS phoenix_base
+FROM elixir:1.11-alpine AS phoenix_base
 
 # Need inotify for watchers to work
 #      npm for the assets
