@@ -1,4 +1,7 @@
 defmodule StudyManager.Factory do
+  @moduledoc """
+  The base factory class
+  """
   use ExMachina.Ecto, repo: StudyManager.Repo
 
   alias Security.Hash

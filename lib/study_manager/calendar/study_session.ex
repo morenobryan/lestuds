@@ -1,4 +1,7 @@
 defmodule StudyManager.Calendar.StudySession do
+  @moduledoc """
+  The ecto entity for a Study Session
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

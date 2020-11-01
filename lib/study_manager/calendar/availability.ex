@@ -1,4 +1,7 @@
 defmodule StudyManager.Calendar.Availability do
+  @moduledoc """
+  The ecto entity for the Availability
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

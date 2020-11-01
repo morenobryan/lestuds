@@ -1,4 +1,7 @@
 defmodule StudyManager.StudyPlans.Plan do
+  @moduledoc """
+  The ecto entity for a Plan
+  """
   use Ecto.Schema
   import Ecto.Changeset
 

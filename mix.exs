@@ -16,7 +16,8 @@ defmodule StudyManager.MixProject do
       dialyzer: [
         plt_file: {:no_warn, "priv/plts/dialyzer.plt"},
         ignore_warnings: ".dialyzer_ignore.exs"
-      ]
+      ],
+      xref: [exclude: Ecto.Type]
     ]
   end
 

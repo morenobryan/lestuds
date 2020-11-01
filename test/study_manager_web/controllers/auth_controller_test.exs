@@ -16,7 +16,7 @@ defmodule StudyManagerWeb.AuthControllerTest do
       conn = post(
         conn,
         Routes.auth_path(conn, :callback, :identity),
-        user: %{ email: user.email, password: "test" }
+        user: %{email: user.email, password: "test"}
       )
 
       assert redirected_to(conn) == Routes.page_path(conn, :index)
@@ -42,7 +42,7 @@ defmodule StudyManagerWeb.AuthControllerTest do
       conn = post(
         conn,
         Routes.auth_path(conn, :callback, :identity),
-        user: %{ email: user.email, password: user.password }
+        user: %{email: user.email, password: user.password}
       )
 
       conn = get(conn, Routes.auth_path(conn, :request, :identity))
