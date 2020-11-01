@@ -1,5 +1,11 @@
 defmodule StudyManagerWeb.Router do
   use StudyManagerWeb, :router
+  import Plug.BasicAuth
+  import Phoenix.LiveDashboard.Router
+
+  pipeline :admins_only do
+    plug :basic_auth, username: "admin", password: "admin"
+  end
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -21,6 +27,11 @@ defmodule StudyManagerWeb.Router do
 
   pipeline :api do
     plug :accepts, ["json"]
+  end
+
+  scope "/" do
+    pipe_through [:browser, :admins_only]
+    live_dashboard "/dashboard"
   end
 
   scope "/", StudyManagerWeb do
